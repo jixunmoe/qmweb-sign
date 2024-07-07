@@ -4,24 +4,26 @@
   "description": "QQ 音乐 (y.qq.com) 请求签名算法，支持 zzc。",
   "main": "dist/node.js",
   "module": "dist/node.mjs",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "src",
     "index.d.ts",
     "tsconfig.json"
   ],
-  "types": "index.d.ts",
   "exports": {
     ".": {
       "node": {
         "require": "./dist/node.cjs",
         "module": "./dist/node.mjs",
-        "import": "./dist/node.mjs"
+        "import": "./dist/node.mjs",
+        "types": "./index.d.ts"
       },
       "default": {
         "require": "./dist/web.cjs",
         "module": "./dist/web.mjs",
-        "import": "./dist/web.mjs"
+        "import": "./dist/web.mjs",
+        "types": "./index.d.ts"
       }
     }
   },
