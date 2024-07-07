@@ -9,7 +9,8 @@
     "dist",
     "src",
     "index.d.ts",
-    "tsconfig.json"
+    "tsconfig.json",
+    "*.py"
   ],
   "exports": {
     ".": {
