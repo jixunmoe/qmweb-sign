@@ -12,6 +12,10 @@
     "tsconfig.json",
     "*.py"
   ],
+  "repository": {
+    "type": "git",
+    "url": "github:jixunmoe/qmweb-sign"
+  },
   "exports": {
     ".": {
       "node": {
