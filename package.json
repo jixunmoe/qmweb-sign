@@ -1,0 +1,54 @@
+{
+  "name": "@jixun/qmweb-sign",
+  "version": "1.0.0",
+  "description": "QQ 音乐 (y.qq.com) 请求签名算法，支持 zzc。",
+  "main": "dist/node.js",
+  "module": "dist/node.mjs",
+  "files": [
+    "dist",
+    "src",
+    "index.d.ts",
+    "tsconfig.json"
+  ],
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "require": "./dist/node.cjs",
+        "module": "./dist/node.mjs",
+        "import": "./dist/node.mjs"
+      },
+      "default": {
+        "require": "./dist/web.cjs",
+        "module": "./dist/web.mjs",
+        "import": "./dist/web.mjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "pnpm run /build:./",
+    "build:node": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.cjs --platform=node --minify",
+    "build:web": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.cjs --platform=browser --minify",
+    "build:node-esm": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.mjs --format=esm --platform=node --minify",
+    "build:web-esm": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.mjs --format=esm --platform=browser --minify",
+    "test": "node -r ts-node/register/transpile-only src/test.ts"
+  },
+  "keywords": [],
+  "author": "Jixun",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/js-sha1": "^0.6.2",
+    "@types/node": "^20.14.10",
+    "base64-js": "^1.5.1",
+    "esbuild": "^0.23.0",
+    "js-sha1": "^0.7.0",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "singleQuote": true
+  }
+}
