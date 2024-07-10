@@ -2,7 +2,7 @@
   "name": "@jixun/qmweb-sign",
   "version": "1.0.3",
   "description": "QQ 音乐 (y.qq.com) 请求签名算法，支持 zzc。",
-  "main": "dist/node.js",
+  "main": "dist/node.cjs",
   "module": "dist/node.mjs",
   "types": "./index.d.ts",
   "files": [
@@ -10,6 +10,7 @@
     "src",
     "index.d.ts",
     "tsconfig.json",
+    "qmweb-rust-wasm/src",
     "*.py"
   ],
   "repository": {
@@ -30,14 +31,22 @@
         "import": "./dist/web.mjs",
         "types": "./index.d.ts"
       }
+    },
+    "./wasm": {
+      "require": "./dist/wasm.cjs",
+      "module": "./dist/wasm.mjs",
+      "import": "./dist/wasm.mjs",
+      "types": "./index.d.ts"
     }
   },
   "scripts": {
     "build": "pnpm run /build:./",
-    "build:node": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.cjs --platform=node --minify",
-    "build:web": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.cjs --platform=browser --minify",
+    "build:node": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.cjs --format=cjs --platform=node --minify",
     "build:node-esm": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.mjs --format=esm --platform=node --minify",
-    "build:web-esm": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.mjs --format=esm --platform=browser --minify",
+    "build:web": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.cjs --format=cjs --platform=node --minify",
+    "build:web-esm": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.mjs --format=esm --platform=node --minify",
+    "build:wasm": "pnpm exec esbuild qmweb-rust-wasm/pkg/qmweb_sign_loader.mjs --tree-shaking=true --bundle --outfile=dist/wasm.cjs --format=cjs --platform=node --minify",
+    "build:wasm-esm": "pnpm exec esbuild qmweb-rust-wasm/pkg/qmweb_sign_loader.mjs --tree-shaking=true --bundle --outfile=dist/wasm.mjs --format=esm --platform=node --minify",
     "test": "node -r ts-node/register/transpile-only src/test.ts"
   },
   "keywords": [],

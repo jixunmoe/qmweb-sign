@@ -21,6 +21,7 @@ const { zzcSign } = require('@jixun/qmweb-sign');
 ## 构建
 
 ```bash
+(cd qmweb-rust-wasm && bash build.sh) # TODO: Migrate to JavaScript build tools
 pnpm build
 ```
 
