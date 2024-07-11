@@ -13,9 +13,11 @@ pnpm i @jixun/qmweb-sign
 ```js
 // ModuleJS, bundler, etc
 import { zzcSign } from '@jixun/qmweb-sign';
+import { zzcSign } from '@jixun/qmweb-sign/wasm'; // inline wasm ver
 
 // CommonJS
 const { zzcSign } = require('@jixun/qmweb-sign');
+const { zzcSign } = require('@jixun/qmweb-sign/wasm'); // inline wasm ver
 ```
 
 ## 构建
