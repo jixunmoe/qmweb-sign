@@ -2,9 +2,9 @@
 
 const fs = require('node:fs');
 
-const FILE_PATH = "pkg/qmweb_sign.js"
-const WASM_PATH = "pkg/qmweb_sign_bg.wasm"
-const FILE_PATH_OUT_MJS = "pkg/qmweb_sign_loader.mjs"
+const FILE_PATH = 'pkg/qmweb_sign.js';
+const WASM_PATH = 'pkg/qmweb_sign_bg.wasm';
+const FILE_PATH_OUT_MJS = 'pkg/qmweb_sign_loader.mjs';
 
 const wasm = fs.readFileSync(WASM_PATH);
 
@@ -31,10 +31,9 @@ function buildCodeForBuffer(name, buffer) {
         i = ${bufferSize},
         j = 0,
         c,
-        outputIdx = [0, 8, 16],
         getWord = () => [0,6,12,18].reduce((acc, shl) => acc + (dict[${JSON.stringify(encoded)}[j++]] << shl), 0)
       ;
-        (c = getWord(), outputIdx).map(x => ${name}_bytes[--i] = (c >> x)),
+        (c = getWord(), [0, 8, 16]).map(x => ${name}_bytes[--i] = (c >> x)),
         i;
       );
 
@@ -51,14 +50,34 @@ loader = loader
     .replace(/(__wbg_init.__wbindgen_wasm_module = )/, '// $1')
     .replace(/module instanceof WebAssembly\.Module/g, 'true')
     .replace(/import\.meta\.url/g, '""')
+    .replace(/^\s*export function/gm, 'function')
+    .replace('realloc === undefined', 'true')
     .replace(/Uint8Array/, 'RenamedUint8Array');
 
 loader = `const RenamedUint8Array = Uint8Array;
+const fn_malloc = '__wbindgen_export_0';
+const fn_realloc = '__wbindgen_export_1';
 ${loader}
 
-${buildCodeForBuffer("qmweb_sign", wasm)}
+${buildCodeForBuffer('qmweb_sign', wasm)}
 initSync(new WebAssembly.Module(qmweb_sign));
-`;
 
+const decoder = new TextDecoder();
+const signBuffer = new RenamedUint8Array(64);
+export function zzcSign(input) {
+  const ptr0 = passArray8ToWasm0(signBuffer, wasm[fn_malloc]);
+  const len0 = WASM_VECTOR_LEN;
+  // const ptr1 = passStringToWasm0(input, wasm[fn_malloc], wasm[fn_realloc]);
+  const ptr1 = passStringToWasm0(input, wasm[fn_malloc]);
+  const len1 = WASM_VECTOR_LEN;
+  const len = wasm.s(ptr0, len0, addHeapObject(signBuffer), ptr1, len1)|0;
+  
+  const result = decoder.decode(signBuffer.slice(0, len || 16))
+  if (len) {
+    return result;
+  }
+  throw new Error(result);
+}
+`;
 
 fs.writeFileSync(FILE_PATH_OUT_MJS, loader, 'utf-8');
