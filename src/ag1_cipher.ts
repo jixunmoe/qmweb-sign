@@ -3,6 +3,10 @@ const responseKey = new Uint8Array([
 ]);
 const requestKey = new Uint8Array([189, 48, 95, 16, 208, 255, 116, 182, 239, 84, 218, 184, 53, 181, 225, 207]);
 
+// AG1:
+// - https://y.qq.com/ryqq/js/vendor.chunk.bfbed3466d0f57ee7041.js
+// - https://web.archive.org/web/20250528/https://y.qq.com/ryqq/js/vendor.chunk.bfbed3466d0f57ee7041.js
+
 export async function encodeAG1Request(data: string): Promise<Uint8Array> {
   const iv = new Uint8Array(12);
   crypto.getRandomValues(iv);
