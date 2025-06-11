@@ -12,18 +12,34 @@ pnpm i @jixun/qmweb-sign
 
 ```js
 // ModuleJS, bundler, etc
-import { zzcSign } from '@jixun/qmweb-sign';
-import { zzcSign } from '@jixun/qmweb-sign/wasm'; // inline wasm ver
+import { zzcSign, decodeAG1Response, encodeAG1Request } from '@jixun/qmweb-sign';
 
 // CommonJS
-const { zzcSign } = require('@jixun/qmweb-sign');
-const { zzcSign } = require('@jixun/qmweb-sign/wasm'); // inline wasm ver
+const { zzcSign, decodeAG1Response, encodeAG1Request } = require('@jixun/qmweb-sign');
+
+
+// 示例代码，根据需要改写。
+async function example() {
+  const payload = JSON.stringify({ /* 填写你的请求载荷 */ });
+  const body = await encodeAG1Request(payload);
+  const sign = zzcSign(payload);
+
+  const url = `https://u6.y.qq.com/cgi-bin/musics.fcg?_=${Date.now()}&encoding=ag-1&sign=${sign}`;
+
+  const res = await fetch(url, {
+    body,
+    method: 'POST',
+    headers: { /* 填写你的请求头 */ },
+  });
+  const buffer = await res.arrayBuffer();
+  const respText = decodeAG1Response(buffer);
+  return JSON.parse(respText);
+}
 ```
 
 ## 构建
 
 ```bash
-(cd qmweb-rust-wasm && bash build.sh) # TODO: Migrate to JavaScript build tools
 pnpm build
 ```
 
@@ -42,3 +58,5 @@ Node 版本没有第三方依赖，适用于网页端的版本有如下依赖：
 $ ./zzc_sign.py 123
 sign=zzcec1b555gzqzg7laztguyjl2bu20r6x1w50c55f60 (len=43)
 ```
+
+※ 注意 Python 版本未实现 `ag-1` 版本的加密。
