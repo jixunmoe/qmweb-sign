@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
 import re
-
-from hashlib import sha1
+import sys
 from base64 import b64encode
+from hashlib import sha1
 
 PART_1_INDEXES = [23, 14, 6, 36, 16, 40, 7, 19]
 PART_2_INDEXES = [16, 1, 32, 12, 19, 27, 8, 5]

@@ -1,0 +1,15 @@
+[project]
+name = "qmweb-sign"
+version = "0.1.0"
+description = "QMWeb Sign implementation"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=45.0.4",
+]
+
+[dependency-groups]
+dev = [
+    "isort>=6.0.1",
+    "pytest>=8.4.0",
+]

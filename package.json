@@ -39,7 +39,7 @@
     "build:node-esm": "pnpm exec esbuild src/node.ts --tree-shaking=true --bundle --outfile=dist/node.mjs --format=esm --platform=node --minify",
     "build:web": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.cjs --format=cjs --platform=node --minify",
     "build:web-esm": "pnpm exec esbuild src/web.ts --tree-shaking=true --bundle --outfile=dist/web.mjs --format=esm --platform=node --minify",
-    "test": "node -r ts-node/register/transpile-only src/test.ts"
+    "test": "node --import tsx --test src/**/*.test.ts"
   },
   "keywords": [],
   "author": "Jixun",
@@ -51,12 +51,13 @@
     "esbuild": "^0.23.0",
     "js-sha1": "^0.7.0",
     "prettier": "^3.3.2",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.1",
     "typescript": "^5.5.3"
   },
   "prettier": {
     "printWidth": 120,
     "tabWidth": 2,
     "singleQuote": true
-  }
+  },
+  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
 }

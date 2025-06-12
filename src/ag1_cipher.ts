@@ -33,10 +33,18 @@ export async function decodeAG1Request(data: Uint8Array): Promise<string> {
   return textDecoder.decode(new Uint8Array(decrypted));
 }
 
-export function decodeAG1Response(data: ArrayBuffer): string {
+export function decodeAG1Response(data: ArrayBuffer | Uint8Array): string {
   const response = new Uint8Array(data);
   response.forEach((c, i, arr) => {
     arr[i] = c ^ responseKey[i % responseKey.length];
   });
   return new TextDecoder().decode(response);
+}
+
+export function encodeAG1Response(data: string): Uint8Array {
+  const response = new Uint8Array(new TextEncoder().encode(data));
+  response.forEach((c, i, arr) => {
+    arr[i] = c ^ responseKey[i % responseKey.length];
+  });
+  return response;
 }
