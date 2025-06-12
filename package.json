@@ -1,6 +1,6 @@
 {
   "name": "@jixun/qmweb-sign",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "QQ 音乐 (y.qq.com) 请求签名算法，支持 zzc。",
   "main": "dist/node.cjs",
   "module": "dist/node.mjs",
